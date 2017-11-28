@@ -60,7 +60,7 @@ sudo make install #安装
 在这之后，我们指定一些caffe将来会用到的库文件的位置，其中包括一个libopencv_core.so.3.1的文件，我们首先要找到这个文件的位置，通过以下命令：
 ```sudo find / -name "libopencv_core.so.3.1*"```。通常会得到如图结果：
 
-![]()
+![](https://github.com/hedingjie/learn_caffe/blob/master/res/QQ20171128-195031%402x.png)
 
 即位置为/usr/local/lib。然后创建一个文件/etc/ld.so.conf.d/opencv.conf，并添加以下内容```/usr/local/lib/```，并执行命令：```sudo ldconfig -v```。
 
@@ -92,6 +92,29 @@ make all -j2
 make test -j2
 make runtest -j2
 ```
+## 测试
+如果上面的步骤没有报错，那么接下来配置caffe的python接口路径：
+
+```
+export PYTHONPATH=/path/to/caffe/python:$PYTHONPATH  
+```
+
+在python命令行中，输入```import caffe```来测试配置是否成功。
+如果报错，尝试如下命令：
+
+```
+#A.把环境变量路径放到 ~/.bashrc文件中  
+sudo echo export PYTHONPATH="~/caffe/python" >> ~/.bashrc  
+#B.使环境变量生效  
+source ~/.bashrc 
+```
+
+## 参考资料
+* [Ubuntu16.04安装Caffe(CPU Only)](http://blog.csdn.net/muzilinxi90/article/details/53673184)
+* [Ubuntu 16.04 or 15.10 Installation Guide](https://github.com/BVLC/caffe/wiki/Ubuntu-16.04-or-15.10-Installation-Guide)
+* [ Ubuntu16.04 Caffe 安装步骤记录（超详尽）](http://blog.csdn.net/yhaolpz/article/details/71375762)
+* [OpenCV runtime error: "libopencv_core.so.3.2: cannot open shared object file: No such file or directory" in Fedora 24 ](https://github.com/GaoHongchen/DIPDemoQt5/issues/1)
+
 
 		
 
