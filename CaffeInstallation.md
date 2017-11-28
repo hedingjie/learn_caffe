@@ -40,7 +40,7 @@ caffe作为机器学习的框架，在图像识别分类领域有着广泛的应
 下载下来zip包后，先进行解压缩
 ```unzip 3.1.0```
 之后，进入解压后的目录，如图所示：
-![OpenCV源码文件](https://github.com/hedingjie/LearnCaffe/blob/master/res/QQ20171128-161250%402x.png)
+
 
 
 
