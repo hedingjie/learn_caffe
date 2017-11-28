@@ -57,8 +57,42 @@ sudo make install #安装
 
 安装完成后可以通过```pkg-config --modversion opencv```检查OpenCV是否安装成功。
 
-## 安装Caffe
-终于进入主题，安装Caffe了！但是正如之前所说，这似乎并不像我们想象的那么简单。首先，我们需要在自己想要安装的路径下[下载](https://codeload.github.com/BVLC/caffe/zip/master)caffe的源码下来，同样进行解压缩之后进入解压目录，可以看到有一个Make
+在这之后，我们指定一些caffe将来会用到的库文件的位置，其中包括一个libopencv_core.so.3.1的文件，我们首先要找到这个文件的位置，通过以下命令：
+```sudo find / -name "libopencv_core.so.3.1*"```。通常会得到如图结果：
 
+![]()
+
+即位置为/usr/local/lib。然后创建一个文件/etc/ld.so.conf.d/opencv.conf，并添加以下内容```/usr/local/lib/```，并执行命令：```sudo ldconfig -v```。
+
+## 安装Caffe
+终于进入主题，安装Caffe了！但是正如之前所说，这似乎并不像我们想象的那么简单。首先，我们需要在自己想要安装的路径下[下载](https://codeload.github.com/BVLC/caffe/zip/master)caffe的源码下来，同样进行解压缩之后进入解压目录，如图所示：
+
+![](https://github.com/hedingjie/learn_caffe/blob/master/res/QQ20171128-192255%402x.png)
+在这个目录下面有一个python文件夹，进入python文件夹，里面有一个requirements.txt文件，这里面都是所需要的Python包，我们采用pip进行安装。不过在这之前，我们得先安装pip：
+
+```sudo apt-get install python-pip```
+
+在这之后，在终端执行如下语句：
+
+```
+for req in $(cat requirements.txt); do pip install $req; done 
+```
+
+在上一级目录中，可以看到有一个Makefile.config.example文件，这是配置文件的模板，我们拷贝一份并命名为Makefile.config。然后做如下更改：
+
+* 将```# CPU_ONLY = 1```前的#号删掉
+* 将```# OPENCV_VERSION := 3```前的#号删掉
+* 将```PYTHON_INCLUDE := /usr/include/python2.7 \		/usr/lib/python2.7/dist-packages/numpy/core/include```改为```PYTHON_INCLUDE := /usr/include/python2.7 \		/usr/local/lib/python2.7/dist-packages/numpy/core/include```
+* 将```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/includeLIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib ```改为```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serialLIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial /usr/local/share/OpenCV/3rdparty/lib/```
+经过如上的操作，我们已经基本完成了所需要的配置。接下来就是进行编译安装了：
+
+```
+make pycaffe -j2
+make all -j2
+make test -j2
+make runtest -j2
+```
+
+		
 
 
