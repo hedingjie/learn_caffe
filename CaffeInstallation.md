@@ -31,9 +31,7 @@ sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev
 ```
 sudo apt-get install git cmake build-essential
 ```
-```
-sudo apt-get install git cmake build-essential
-```
+
 ## 安装OpenCV 3.1
 caffe作为机器学习的框架，在图像识别分类领域有着广泛的应用。当然，这离不开机器视领域久负盛名的库——OpenCV的支持。接下来就是要通过源码编译安装OpenCV 3.1 （[点击下载](https://codeload.github.com/opencv/opencv/zip/3.1.0)）。
 
@@ -75,15 +73,19 @@ sudo make install #安装
 在这之后，在终端执行如下语句：
 
 ```
-for req in $(cat requirements.txt); do pip install $req; done 
+for req in $(cat requirements.txt); do sudo pip install $req; done 
 ```
 
 在上一级目录中，可以看到有一个Makefile.config.example文件，这是配置文件的模板，我们拷贝一份并命名为Makefile.config。然后做如下更改：
 
 * 将```# CPU_ONLY = 1```前的#号删掉
 * 将```# OPENCV_VERSION := 3```前的#号删掉
-* 将```PYTHON_INCLUDE := /usr/include/python2.7 \		/usr/lib/python2.7/dist-packages/numpy/core/include```改为```PYTHON_INCLUDE := /usr/include/python2.7 \		/usr/local/lib/python2.7/dist-packages/numpy/core/include```
-* 将```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/includeLIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib ```改为```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serialLIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial /usr/local/share/OpenCV/3rdparty/lib/```
+* 将```PYTHON_INCLUDE := /usr/include/python2.7 \
+		/usr/lib/python2.7/dist-packages/numpy/core/include```改为```PYTHON_INCLUDE := /usr/include/python2.7 \
+		/usr/local/lib/python2.7/dist-packages/numpy/core/include```
+* 将```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib ```改为```INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial /usr/local/share/OpenCV/3rdparty/lib/```
 经过如上的操作，我们已经基本完成了所需要的配置。接下来就是进行编译安装了：
 
 ```
